@@ -35,7 +35,7 @@ public partial class EscuelaContext : DbContext
             entity.ToTable("rol");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .HasDefaultValueSql("gen_random_uuid()")
                 .HasColumnName("id");
             entity.Property(e => e.Fechacreacion)
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
@@ -87,10 +87,12 @@ public partial class EscuelaContext : DbContext
 
             entity.HasOne(d => d.IdrolNavigation).WithMany()
                 .HasForeignKey(d => d.Idrol)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_usuariorol_rol");
 
             entity.HasOne(d => d.IdusuarioNavigation).WithMany()
                 .HasForeignKey(d => d.Idusuario)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_usuariorol_usuario");
         });
 

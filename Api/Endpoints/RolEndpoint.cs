@@ -23,20 +23,18 @@ public static class RolEndpoint
         });
             
         app.MapGet("/roles", (EscuelaContext context)=>{
-            var filtrado=context.Rols.ToList();
-            
-            return Results.Ok(filtrado.Where(word => word.Habilitado == true).ToList());
+            return Results.Ok(context.Rols.ToList());
         });
         
         app.MapGet("/rol", ([FromQuery] Guid idRol, EscuelaContext context)=>{
             var rolAEspecifico = context.Rols.FirstOrDefault(rol => rol.Id == idRol);
             if (rolAEspecifico != null)
             {
-                return Results.Ok(rolAEspecifico); //Codigo 200
+                return Results.Ok(rolAEspecifico); 
             }
             else
             {
-                return Results.NotFound(); //Codigo 404
+                return Results.NotFound(); 
             }
         });
 
@@ -57,19 +55,16 @@ public static class RolEndpoint
             var rolAEliminar = context.Rols.FirstOrDefault(rol => rol.Id == idRol);
             if (rolAEliminar != null)
             {
-                rolAEliminar.Habilitado = false;
-                //context.Rols.Remove(rolAEliminar);
+                context.Rols.Remove(rolAEliminar);
                 context.SaveChanges();
-                return Results.NoContent(); //Codigo 204
+                return Results.NoContent(); 
             }
             else
             {
-                return Results.NotFound(); //Codigo 404
+                return Results.NotFound(); 
             }
         });
 
-        // asignar y designar un rol a un usuario y un usuario a un rol
-        // rol a un usuario
         app.MapPost("/rol/{idRol}/usuario/{idUsuario}", (Guid idRol, int idUsuario, EscuelaContext context)=>{
             var rol = context.Rols.FirstOrDefault(rol => rol.Id == idRol);
             var usuario = context.Usuarios.FirstOrDefault(usuario => usuario.Id == idUsuario);

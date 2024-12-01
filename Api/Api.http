@@ -1,6 +1,66 @@
 @Api_HostAddress = http://localhost:5250
 
-GET {{Api_HostAddress}}/weatherforecast/
+###
+GET {{Api_HostAddress}}/api/roles/
 Accept: application/json
-
+###
+GET {{Api_HostAddress}}/api/rol?idRol=7e7bce7b-d121-497f-8a7c-759c941cec90
+Accept: application/json
+###
+POST {{Api_HostAddress}}/api/rol/
+Content-Type: application/json
+{
+    "Nombre": "jardinero",
+    "Habilitado": true
+}
+###
+PUT {{Api_HostAddress}}/api/rol?idRol=7e7bce7b-d121-497f-8a7c-759c941cec90
+Content-Type: application/json
+{
+    "Nombre": "profesor",
+    "Habilitado": false
+}
+###
+DELETE {{Api_HostAddress}}/api/rol?idrol=7e7bce7b-d121-497f-8a7c-759c941cec90
+Accept: application/json
+### 
+GET {{Api_HostAddress}}/api/usuarios/
+Accept: application/json
+###
+GET {{Api_HostAddress}}/api/usuario?idUsuario=1
+Accept: application/json
+###
+POST {{Api_HostAddress}}/api/usuario/
+Content-Type: application/json
+{
+    "Nombre": "Martin",
+    "Email":"martin@gmail.com",
+    "Nombreusuario":"mar",
+    "Contrasenia":"martincontraseña", 
+    "Habilitido": true
+}
+###
+PUT {{Api_HostAddress}}/api/usuario?idUsuario=2
+Content-Type: application/json
+{
+    "Nombre":"jasmin",
+    "Email":"jasmin@gmail.com",
+    "Nombreusuario":"jas123",
+    "Contrasenia":"iana"
+}
+###
+DELETE {{Api_HostAddress}}/api/usuario?idUsuario=2
+Accept: application/json
+###
+POST {{Api_HostAddress}}/api/rol/7e7bce7b-d121-497f-8a7c-759c941cec90/usuario/2
+Content-Type: application/json
+###
+DELETE {{Api_HostAddress}}/api/rol/7e7bce7b-d121-497f-8a7c-759c941cec90/usuario/2
+Content-Type: application/json
+###
+POST {{Api_HostAddress}}/api/usuario/3/rol/50d1a44c-f97f-4379-9ebc-e14e2d9d9b53
+Content-Type: application/json
+###
+DELETE {{Api_HostAddress}}/api/usuario/3/rol/50d1a44c-f97f-4379-9ebc-e14e2d9d9b53
+Content-Type: application/json
 ###

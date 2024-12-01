@@ -14,32 +14,28 @@ public static class UsuarioEndpoint
             {
                 context.Usuarios.Add(usuario);
                 context.SaveChanges();
-                return Results.Created(); // Codigo 201
+                return Results.Created(); 
             }
             else
             {
-                return Results.BadRequest(); // Codigo 400
+                return Results.BadRequest(); 
             }
 
         });
-
         app.MapGet("/usuarios", (EscuelaContext context) =>{
-            var filtrado=context.Usuarios.ToList();
-            
-            return Results.Ok(filtrado.Where(word => word.Habilitido == true).ToList());
+            return Results.Ok(context.Usuarios);
         });
 
-        //Obtener usuario por id
         app.MapGet("/usuario", ([FromQuery] int idUsuario, EscuelaContext context) =>
         {
             var usuarioAEspecifico = context.Usuarios.FirstOrDefault(usuario => usuario.Id == idUsuario);
             if (usuarioAEspecifico != null)
             {
-                return Results.Ok(usuarioAEspecifico); //Codigo 200
+                return Results.Ok(usuarioAEspecifico); 
             }
             else
             {
-                return Results.NotFound(); //Codigo 404
+                return Results.NotFound(); 
             }
         });
 
@@ -64,17 +60,15 @@ public static class UsuarioEndpoint
             var usuarioAEliminar = context.Usuarios.FirstOrDefault(usuario => usuario.Id == idUsuario);
             if (usuarioAEliminar != null)
             {
-                //context.Usuarios.Remove(usuarioAEliminar);
-                usuarioAEliminar.Habilitido = false;
+                context.Usuarios.Remove(usuarioAEliminar);
                 context.SaveChanges();  
-                return Results.NoContent(); //Codigo 204
+                return Results.NoContent(); 
             }
             else
             {
-                return Results.NotFound(); //Codigo 404
+                return Results.NotFound(); 
             }
         });
-        // usuario a un rol
         app.MapPost("/usuario/{idUsuario}/rol/{idRol}", (int idUsuario, Guid idRol, EscuelaContext context)=>{
             var rol = context.Rols.FirstOrDefault(rol => rol.Id == idRol);
             var usuario = context.Usuarios.FirstOrDefault(usuario => usuario.Id == idUsuario);  
